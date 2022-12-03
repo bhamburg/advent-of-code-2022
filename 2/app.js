@@ -1,7 +1,10 @@
 //  Part 1
-//  Rock:        X is 1, beats C, ties A, loses to B
-//  Paper:       Y is 2, beats A, ties B, loses to C
-//  Scissors:    Z is 3, beats B, ties C, loses to A
+//  Rock:        A or X is 1, beats C, ties A, loses to B
+//  Paper:       B or Y is 2, beats A, ties B, loses to C
+//  Scissors:    C or Z is 3, beats B, ties C, loses to A
+
+//  Part 2
+//  X means you need to lose, Y means you need to end the round in a draw, and Z means you need to win.
 
 //  Sample
 //  A Y
@@ -19,34 +22,58 @@ console.log(totalPoints);
 
 function getPoints(string) {
     let points = 0;
-    if (string === 'A' || string === 'X') {
+    if (string === 'A') {
         points = 1;
     }
-    if (string === 'B' || string === 'Y') {
+    if (string === 'B') {
         points = 2;
     }
-    if (string === 'C' || string === 'Z') {
+    if (string === 'C') {
         points = 3;
     }
     return points;
 }
 
-function rps(opp,you) {
+function rps(opp,outcome) {
     let gameTotal = 0;
-    
-    // Calculate points from choice
-    gameTotal += getPoints(you);
+    let you = null;
     
     // Calculate points from match result
-    // There is a tie
-    if (getPoints(you) === getPoints(opp)) {
+    // There is a draw
+    if (outcome === 'Y') {
         gameTotal += 3;
+        gameTotal += getPoints(opp);
     }
     else {
+        // You lose
+        if (outcome === 'X') {
+            if (opp === 'A') {
+                gameTotal += getPoints('C')
+            }
+            if (opp === 'B') {
+                gameTotal += getPoints('A')
+            }
+            if (opp === 'C') {
+                gameTotal += getPoints('B')
+            }
+        }
         // You win
-        if ((you === 'X' && opp === 'C') || (you === 'Y' && opp === 'A') || (you === 'Z' && opp === 'B')) {
+        if (outcome === 'Z') {
             gameTotal += 6;
+            if (opp === 'A') {
+                gameTotal += getPoints('B')
+            }
+            if (opp === 'B') {
+                gameTotal += getPoints('C')
+            }
+            if (opp === 'C') {
+                gameTotal += getPoints('A')
+            }
         }
     }
+
+    // Calculate points from your choice
+    gameTotal += getPoints(you);
+
     return gameTotal;
 }
