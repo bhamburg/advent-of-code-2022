@@ -1,13 +1,3 @@
-// Part 1
-// 
-// Sample:
-// vJrwpWtwJgWrhcsFMMfFFhFp
-// jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-// PmmdzqPrVvPwwTWBwg
-// wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-// ttgJtRGJQctTZtZT
-// CrZsJsPPZsGzwwsLwLmpwMDw
-
 let sample = [
     'vJrwpWtwJgWrhcsFMMfFFhFp',
     'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
@@ -22,9 +12,9 @@ let input = [
 ]
 
 let totalPoints = 0;
-input.forEach(rucksack => {
-    totalPoints += getPriority(findType(rucksack));
-});
+for(let i = 0; i < input.length; i += 3) {
+    totalPoints += getPriority(findTypeAmongThree(input[i],input[i+1],input[i+2]));
+}
 console.log(totalPoints);
 
 
@@ -35,6 +25,17 @@ function findType(string) {
     let second = string.slice(string.length / 2);
     [...first].forEach(char => {
         if (second.includes(char)) {
+            type = char;
+        };
+    });
+    return type;
+}
+
+// Find character that exists in all three
+function findTypeAmongThree(first,second,third) {
+    let type = null;
+    [...first].forEach(char => {
+        if (second.includes(char) && third.includes(char)) {
             type = char;
         };
     });
