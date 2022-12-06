@@ -14,7 +14,7 @@ let sample = [
 
 let total = 0;
 input.forEach(pair => {
-    if (checkRanges(getRangeArr(pair[0]),getRangeArr(pair[1]))) {
+    if (checkOverlaps(getRangeArr(pair[0]),getRangeArr(pair[1]))) {
         total++;
     }
 })
@@ -30,4 +30,8 @@ function getRangeArr(range) {
 
 function checkRanges(a,b) {
     return (a[0] <= b[0] && a[1] >= b[1]) || (b[0] <= a[0] && b[1] >= a[1]);
+}
+
+function checkOverlaps(a,b) {
+    return (a[1] >= b[0]) && !(a[0] > b[1]);
 }
